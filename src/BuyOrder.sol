@@ -12,9 +12,9 @@ contract BuyOrder is Ownable, PriceCalculation{
     // id 3 = BTC
     // id 4 = CBETH
     // id 5 = ETH (NATIVE)
-    IERC20 public DAI = IERC20(0xf0c02506ADc6BE5d4e4CceE5E5E2C1E1E0ed8aF4);
-    IERC20 public LINK =IERC20(0x779877A7B0D9E8603169DdbD7836e478b4624789);
-    IERC20 public BTC = IERC20(0x66194F6C999b28965E0303a84cb8b797273B6b8b);
+    IERC20 public DAI = IERC20(0x7D90bB8638EED8D8D7624643927FbC9984750360);
+    IERC20 public LINK =IERC20(0xa8C6dA47368DB76b8C272FF3a738F4e22B8C4917);
+    IERC20 public BTC = IERC20(0x0a1f1390d85EA63851d7d458580EDa1D1Cc8545b);
     IERC20 public CBETH = IERC20(0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22);
 
     //Order Details will be in this contract 
@@ -64,11 +64,14 @@ contract BuyOrder is Ownable, PriceCalculation{
 
     function buyOrder(uint256 _id,uint256 _tokenId) external {
         OrderDetails.Order memory fetchedOrder = getOrderDetails(_id);
-        IERC20 tokenAddr = getTokenAddressFromId(_tokenId);
         uint256 price = fetchedOrder.price;
-        addAllowance(price, _tokenId);
         orderDetailsContract.updateSoldStatus(_id,msg.sender,block.timestamp,_tokenId);
+        if(_tokenId == 5){
+            payable(owner()).transfer(price);
+        }else{
+        addAllowance(price, _tokenId);
         transferToken(_tokenId, price);
+        }
     }
 
 }
