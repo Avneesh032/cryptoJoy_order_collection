@@ -2,7 +2,7 @@
 pragma solidity^0.8.28;
 import {AggregatorV3Interface} from "lib/foundry-chainlink-toolkit/src/interfaces/feeds/AggregatorV3Interface.sol";
 import "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
-contract PriceCalculation {
+contract FetchPairPrice {
     AggregatorV3Interface constant  BTC_USD = AggregatorV3Interface(0x0FB99723Aee6f420beAD13e6bBB79b7E6F034298);
     AggregatorV3Interface constant  CBETH_USD = AggregatorV3Interface(0x3c65e28D357a37589e1C7C86044a9f44dDC17134);
     AggregatorV3Interface constant  DAI_USD = AggregatorV3Interface(0xD1092a65338d049DB68D7Be6bD89d17a0929945e);
@@ -38,5 +38,7 @@ contract PriceCalculation {
     function getDecimal(AggregatorV3Interface _pair) internal view returns(uint256){
         return _pair.decimals();
     }
+
+   
 
 }
